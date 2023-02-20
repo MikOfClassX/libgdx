@@ -55,6 +55,8 @@ public class ModelInstance implements RenderableProvider {
 	public Matrix4 transform;
 	/** user definable value, which is passed to the {@link Shader}. */
 	public Object userData;
+	/** ClassX : used to determine draw order for SKIP mode rendering */
+	public int renderQueueMode;
 
 	/** Constructs a new ModelInstance with all nodes and materials of the given model.
 	 * @param model The {@link Model} to create an instance of. */
@@ -376,6 +378,7 @@ public class ModelInstance implements RenderableProvider {
 		else
 			out.worldTransform.idt();
 		out.userData = userData;
+		out.renderQueueMode = renderQueueMode;
 		return out;
 	}
 

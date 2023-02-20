@@ -92,6 +92,8 @@ public class Renderable {
 	public Shader shader;
 	/** User definable value, may be null. */
 	public Object userData;
+	/** ClassX : used to determine draw order for SKIP mode rendering */
+	public int renderQueueMode;
 
 	/** renderable temp attr used for combining attrs (i.e. see: DepthShader) */
 	public final Attributes tmpAttributes = new Attributes();
@@ -104,6 +106,7 @@ public class Renderable {
 		environment = renderable.environment;
 		shader = renderable.shader;
 		userData = renderable.userData;
+		renderQueueMode = renderable.renderQueueMode;
 		return this;
 	}
 }
