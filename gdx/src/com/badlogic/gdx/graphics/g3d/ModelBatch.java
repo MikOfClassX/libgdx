@@ -151,7 +151,7 @@ public class ModelBatch implements Disposable {
 	 * {@link #end()}.
 	 * @param cam The {@link Camera} to be used when rendering and sorting. */
 	public void begin (final Camera cam) {
-		if (camera != null) throw new GdxRuntimeException("Call end() first.");
+		if (camera != null) System.err.println("[ModelBatch] Error: Call end() first.");
 		camera = cam;
 		if (ownContext) context.begin();
 	}
