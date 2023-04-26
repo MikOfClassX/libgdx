@@ -89,6 +89,10 @@ public final class Intersector {
 	public static boolean isPointInTriangle (Vector3 point, Vector3 t1, Vector3 t2, Vector3 t3) {
 		final IntersectorData data = tlData.get();
 
+		data.v0.set(t1).sub(point);
+		data.v1.set(t2).sub(point);
+		data.v2.set(t3).sub(point);
+		
 		data.v1.crs(data.v2);
 		data.v2.crs(data.v0);
 
