@@ -26,6 +26,8 @@ import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.Cursor.*;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.GL30;
+import com.badlogic.gdx.graphics.GL31;
+import com.badlogic.gdx.graphics.GL32;
 import com.badlogic.gdx.graphics.glutils.*;
 import com.badlogic.gdx.utils.*;
 
@@ -176,9 +178,9 @@ public class LwjglGraphicsOffScreen extends AbstractGraphics {
 	 * @param enable */
 	public void enableCubeMapSeamless (boolean enable) {
 		if (enable) {
-			gl20.glEnable(GL32.GL_TEXTURE_CUBE_MAP_SEAMLESS);
+			gl20.glEnable(org.lwjgl.opengl.GL32.GL_TEXTURE_CUBE_MAP_SEAMLESS);
 		} else {
-			gl20.glDisable(GL32.GL_TEXTURE_CUBE_MAP_SEAMLESS);
+			gl20.glDisable(org.lwjgl.opengl.GL32.GL_TEXTURE_CUBE_MAP_SEAMLESS);
 		}
 	}
 
@@ -410,5 +412,51 @@ public class LwjglGraphicsOffScreen extends AbstractGraphics {
 		protected LwjglMonitor (int virtualX, int virtualY, String name) {
 			super(virtualX, virtualY, name);
 		}
+	}
+
+	/*
+	 * @see com.badlogic.gdx.Graphics#isGL31Available()
+	 */
+	@Override
+	public boolean isGL31Available () {
+		return false;
+	}
+
+	/*
+	 * @see com.badlogic.gdx.Graphics#isGL32Available()
+	 */
+	@Override
+	public boolean isGL32Available () {
+		return false;
+	}
+
+	/*
+	 * @see com.badlogic.gdx.Graphics#getGL31()
+	 */
+	@Override
+	public GL31 getGL31 () {
+		return null;
+	}
+
+	/*
+	 * @see com.badlogic.gdx.Graphics#getGL32()
+	 */
+	@Override
+	public GL32 getGL32 () {
+		return null;
+	}
+
+	/*
+	 * @see com.badlogic.gdx.Graphics#setGL31(com.badlogic.gdx.graphics.GL31)
+	 */
+	@Override
+	public void setGL31 (GL31 gl31) {
+	}
+
+	/*
+	 * @see com.badlogic.gdx.Graphics#setGL32(com.badlogic.gdx.graphics.GL32)
+	 */
+	@Override
+	public void setGL32 (GL32 gl32) {
 	}
 }
