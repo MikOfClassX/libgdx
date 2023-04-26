@@ -92,7 +92,7 @@ public final class Intersector {
 		data.v0.set(t1).sub(point);
 		data.v1.set(t2).sub(point);
 		data.v2.set(t3).sub(point);
-		
+
 		data.v1.crs(data.v2);
 		data.v2.crs(data.v0);
 
