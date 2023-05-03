@@ -70,39 +70,41 @@ public class BaseShapeBuilder {
 
 		/* Matrix4 */
 		protected final Matrix4 matTmp1 = new Matrix4();
+
+		protected final FlushablePool<Vector3> vectorPool = new FlushablePool<Vector3>() {
+			@Override
+			protected Vector3 newObject () {
+				return new Vector3();
+			}
+		};
+
+		protected final FlushablePool<Matrix4> matrices4Pool = new FlushablePool<Matrix4>() {
+			@Override
+			protected Matrix4 newObject () {
+				return new Matrix4();
+			}
+		};
 	}
 
 	// ClassX: thread-safety support
 	protected static final BaseShapeLocal tlData = new BaseShapeLocal();
 
-	private final static FlushablePool<Vector3> vectorPool = new FlushablePool<Vector3>() {
-		@Override
-		protected Vector3 newObject () {
-			return new Vector3();
-		}
-	};
-
-	private final static FlushablePool<Matrix4> matrices4Pool = new FlushablePool<Matrix4>() {
-		@Override
-		protected Matrix4 newObject () {
-			return new Matrix4();
-		}
-	};
-
 	/** Obtain a temporary {@link Vector3} object, must be free'd using {@link #freeAll()}. */
 	protected static Vector3 obtainV3 () {
-		return vectorPool.obtain();
+		final BaseShapeData data = tlData.get();
+		return data.vectorPool.obtain();
 	}
 
 	/** Obtain a temporary {@link Matrix4} object, must be free'd using {@link #freeAll()}. */
 	protected static Matrix4 obtainM4 () {
-		final Matrix4 result = matrices4Pool.obtain();
-		return result;
+		final BaseShapeData data = tlData.get();
+		return data.matrices4Pool.obtain();
 	}
 
 	/** Free all objects obtained using one of the `obtainXX` methods. */
 	protected static void freeAll () {
-		vectorPool.flush();
-		matrices4Pool.flush();
+		final BaseShapeData data = tlData.get();
+		data.vectorPool.flush();
+		data.matrices4Pool.flush();
 	}
 }
