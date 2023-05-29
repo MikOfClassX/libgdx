@@ -17,6 +17,7 @@
 package com.badlogic.gdx.graphics.g3d.attributes;
 
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g3d.Attribute;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.NumberUtils;
@@ -45,6 +46,8 @@ public class BlendingAttribute extends Attribute {
 	public int equationRGB;
 	/** the blend equation for alpha (default: GL_FUNC_ADD) */
 	public int equationAlpha;
+	/** the constant color for blend color (default: 0,0,0,0) */
+	public Color constantColor;
 	/** The opacity used as source alpha value, ranging from 0 (fully transparent) to 1 (fully opaque), (default: 1). */
 	public float opacity = 1.f;
 
@@ -53,7 +56,7 @@ public class BlendingAttribute extends Attribute {
 	}
 
 	public BlendingAttribute (final boolean blended, final int sourceFuncRGB, final int destFuncRGB, final int sourceFuncAlpha,
-		final int destFuncAlpha, final int equationRGB, final int equationAlpha, final float opacity) {
+		final int destFuncAlpha, final int equationRGB, final int equationAlpha, final Color constantColor, final float opacity) {
 		super(Type);
 		this.blended = blended;
 		this.sourceFunctionRGB = sourceFuncRGB;
@@ -62,11 +65,12 @@ public class BlendingAttribute extends Attribute {
 		this.destFunctionAlpha = destFuncAlpha;
 		this.equationRGB = equationRGB;
 		this.equationAlpha = equationAlpha;
+		this.constantColor = constantColor;
 		this.opacity = opacity;
 	}
 
 	public BlendingAttribute (final boolean blended, final int sourceFunc, final int destFunc, final float opacity) {
-		this(blended, sourceFunc, destFunc, sourceFunc, destFunc, GL20.GL_FUNC_ADD, GL20.GL_FUNC_ADD, opacity);
+		this(blended, sourceFunc, destFunc, sourceFunc, destFunc, GL20.GL_FUNC_ADD, GL20.GL_FUNC_ADD, Color.CLEAR, opacity);
 	}
 
 	public BlendingAttribute (final int sourceFunc, final int destFunc, final float opacity) {
@@ -91,7 +95,7 @@ public class BlendingAttribute extends Attribute {
 			copyFrom == null ? GL20.GL_SRC_ALPHA : copyFrom.sourceFunctionAlpha,
 			copyFrom == null ? GL20.GL_ONE_MINUS_SRC_ALPHA : copyFrom.destFunctionAlpha,
 			copyFrom == null ? GL20.GL_FUNC_ADD : copyFrom.equationRGB, copyFrom == null ? GL20.GL_FUNC_ADD : copyFrom.equationAlpha,
-			copyFrom == null ? 1.f : copyFrom.opacity);
+			copyFrom == null ? Color.CLEAR : copyFrom.constantColor, copyFrom == null ? 1.f : copyFrom.opacity);
 	}
 
 	@Override
@@ -109,6 +113,7 @@ public class BlendingAttribute extends Attribute {
 		result = 947 * result + destFunctionAlpha;
 		result = 947 * result + equationRGB;
 		result = 947 * result + equationAlpha;
+		result = (constantColor != null) ? (947 * result + constantColor.toIntBits()) : result;
 		result = 947 * result + NumberUtils.floatToRawIntBits(opacity);
 		return result;
 	}
@@ -124,6 +129,7 @@ public class BlendingAttribute extends Attribute {
 		if (destFunctionAlpha != other.destFunctionAlpha) return destFunctionAlpha - other.destFunctionAlpha;
 		if (equationRGB != other.equationRGB) return equationRGB - other.equationRGB;
 		if (equationAlpha != other.equationAlpha) return equationAlpha - other.equationAlpha;
+		if (constantColor != null && !constantColor.equals(other.constantColor)) return 1;
 		return (MathUtils.isEqual(opacity, other.opacity)) ? 0 : (opacity < other.opacity ? 1 : -1);
 	}
 }

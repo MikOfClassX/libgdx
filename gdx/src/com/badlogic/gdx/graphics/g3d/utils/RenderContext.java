@@ -33,6 +33,7 @@ public class RenderContext {
 	private int blendDFactorAlpha;
 	private int blendEquationRGB;
 	private int blendEquationAlpha;
+	private Color blendConstantColor;
 	private int depthFunc;
 	private float depthRangeNear;
 	private float depthRangeFar;
@@ -53,6 +54,7 @@ public class RenderContext {
 		blending = false;
 		Gdx.gl.glDisable(GL20.GL_CULL_FACE);
 		cullFace = blendSFactorRGB = blendDFactorRGB = blendSFactorAlpha = blendDFactorAlpha = blendEquationRGB = blendEquationAlpha = -1;
+		blendConstantColor = null;
 		textureBinder.begin();
 	}
 
@@ -92,11 +94,11 @@ public class RenderContext {
 	}
 
 	public void setBlending (final boolean enabled, final int sFactor, final int dFactor) {
-		setBlending(enabled, sFactor, dFactor, sFactor, dFactor, GL20.GL_FUNC_ADD, GL20.GL_FUNC_ADD);
+		setBlending(enabled, sFactor, dFactor, sFactor, dFactor, GL20.GL_FUNC_ADD, GL20.GL_FUNC_ADD, Color.CLEAR);
 	}
 
 	public void setBlending (final boolean enabled, final int sFactorRGB, final int dFactorRGB, final int sFactorAlpha,
-		final int dFactorAlpha, final int equationRGB, final int equationAlpha) {
+		final int dFactorAlpha, final int equationRGB, final int equationAlpha, final Color constantColor) {
 		if (enabled != blending) {
 			blending = enabled;
 			if (enabled)
@@ -106,6 +108,13 @@ public class RenderContext {
 		}
 
 		if (enabled) {
+			if (blendConstantColor != constantColor) {
+				if (constantColor != null) {
+					Gdx.gl.glBlendColor(constantColor.r, constantColor.g, constantColor.b, constantColor.a);
+				}
+				blendConstantColor = constantColor;
+			}
+
 			if (blendEquationRGB != equationRGB || blendEquationAlpha != equationAlpha) {
 				Gdx.gl.glBlendEquationSeparate(equationRGB, equationAlpha);
 				blendEquationRGB = equationRGB;
