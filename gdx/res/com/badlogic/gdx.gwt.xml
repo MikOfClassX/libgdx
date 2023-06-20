@@ -225,6 +225,7 @@
 		<include name="graphics/g3d/utils/TextureBinder.java"/>
 		<include name="graphics/g3d/utils/TextureDescriptor.java"/>
 		<include name="graphics/g3d/utils/TextureProvider.java"/>
+		<include name="graphics/g3d/utils/CullHelper.java"/>
 		
 	<!-- graphics/g3d/utils/shapebuilders -->
 		<include name="graphics/g3d/utils/shapebuilders/ArrowShapeBuilder.java"/>

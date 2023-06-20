@@ -25,6 +25,7 @@ import com.badlogic.gdx.graphics.g3d.utils.DefaultTextureBinder;
 import com.badlogic.gdx.graphics.g3d.utils.RenderContext;
 import com.badlogic.gdx.graphics.g3d.utils.RenderableSorter;
 import com.badlogic.gdx.graphics.g3d.utils.ShaderProvider;
+import com.badlogic.gdx.graphics.g3d.utils.CullHelper;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.FlushablePool;
@@ -70,6 +71,12 @@ public class ModelBatch implements Disposable {
 	protected final ShaderProvider shaderProvider;
 	/** the {@link RenderableSorter} **/
 	protected final RenderableSorter sorter;
+
+	// set true to enable renderable culling
+	private boolean enableRenderableCulling = false;
+
+	// internal cull helper
+	private final CullHelper cullHelper = new CullHelper();
 
 	/** Construct a ModelBatch, using this constructor makes you responsible for calling context.begin() and context.end()
 	 * yourself.
@@ -195,6 +202,11 @@ public class ModelBatch implements Disposable {
 		return sorter;
 	}
 
+	/** @param enableRenderableCulling the enableRenderableCulling to set */
+	public void setEnableRenderableCulling (boolean enableRenderableCulling) {
+		this.enableRenderableCulling = enableRenderableCulling;
+	}
+
 	/** Flushes the batch, causing all {@link Renderable}s in the batch to be rendered. Can only be called after the call to
 	 * {@link #begin(Camera)} and before the call to {@link #end()}. */
 	public void flush () {
@@ -202,6 +214,12 @@ public class ModelBatch implements Disposable {
 		Shader currentShader = null;
 		for (int i = 0; i < renderables.size; i++) {
 			final Renderable renderable = renderables.get(i);
+
+			// cull handling
+			if (enableRenderableCulling && cullHelper.canCullRenderable(camera, renderable)) {
+				continue;
+			}
+
 			if (currentShader != renderable.shader) {
 				if (currentShader != null) currentShader.end();
 				currentShader = renderable.shader;
