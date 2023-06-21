@@ -23,7 +23,7 @@ public class CullHelper {
 	 * @return true if the renderable needs to be culled */
 	public boolean canCullRenderable (final Camera cam, final Renderable r) {
 		// skip not updated mesh
-		if (r.meshPart.radius == -1) return false;
+		if (r.excludeFromCulling || r.meshPart.radius == -1) return false;
 
 		// get renderable scale
 		r.worldTransform.getScale(rScale);

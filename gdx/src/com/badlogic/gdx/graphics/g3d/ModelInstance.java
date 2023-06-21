@@ -57,6 +57,8 @@ public class ModelInstance implements RenderableProvider {
 	public Object userData;
 	/** ClassX : used to determine draw order for SKIP mode rendering */
 	public int renderQueueMode;
+	/** ClassX: used to determine if this renderable has to be excluded from culling */
+	public boolean excludeFromCulling;
 
 	/** Constructs a new ModelInstance with all nodes and materials of the given model.
 	 * @param model The {@link Model} to create an instance of. */
@@ -379,6 +381,7 @@ public class ModelInstance implements RenderableProvider {
 			out.worldTransform.idt();
 		out.userData = userData;
 		out.renderQueueMode = renderQueueMode;
+		out.excludeFromCulling = excludeFromCulling;
 		return out;
 	}
 

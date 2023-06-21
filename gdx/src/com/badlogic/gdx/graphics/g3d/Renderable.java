@@ -94,6 +94,8 @@ public class Renderable {
 	public Object userData;
 	/** ClassX : used to determine draw order for SKIP mode rendering */
 	public int renderQueueMode;
+	/** ClassX: used to determine if this renderable has to be excluded from culling */
+	public boolean excludeFromCulling;
 
 	/** renderable temp attr used for combining attrs (i.e. see: DepthShader) */
 	public final Attributes tmpAttributes = new Attributes();
@@ -107,6 +109,7 @@ public class Renderable {
 		shader = renderable.shader;
 		userData = renderable.userData;
 		renderQueueMode = renderable.renderQueueMode;
+		excludeFromCulling = renderable.excludeFromCulling;
 		return this;
 	}
 }
