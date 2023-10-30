@@ -372,6 +372,7 @@
 		<include name="math/Vector.java"/>
 		<include name="math/Vector2.java"/>
 		<include name="math/Vector3.java"/>		
+		<include name="math/Vector4.java"/>
 		<include name="math/WindowedMean.java"/>
 				
 	<!-- math/collision -->								
