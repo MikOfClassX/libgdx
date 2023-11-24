@@ -169,11 +169,24 @@ public class Attributes implements Iterable<Attribute>, Comparator<Attribute>, C
 		if (other == this) return true;
 		if ((other == null) || (mask != other.mask)) return false;
 		if (!compareValues) return true;
-		sort();
-		other.sort();
-		for (int i = 0; i < attributes.size; i++)
-			if (!attributes.get(i).equals(other.attributes.get(i))) return false;
+
+		// ClassX: the order of attributes may be different from other attributes therefore we must use a more accurate compare
+		for (int i = 0; i < attributes.size; i++) {
+			final Attribute attr = attributes.get(i);
+			for (int j = 0; j < other.attributes.size; j++) {
+				final Attribute otherAttr = other.attributes.get(j);
+				if (attr.type == otherAttr.type) {
+					if (!otherAttr.equals(attr)) return false;
+					break;
+				}
+			}
+		}
 		return true;
+		// sort();
+		// other.sort();
+		// for (int i = 0; i < attributes.size; i++)
+		// if (!attributes.get(i).equals(other.attributes.get(i))) return false;
+		// return true;
 	}
 
 	/** See {@link #same(Attributes, boolean)}
