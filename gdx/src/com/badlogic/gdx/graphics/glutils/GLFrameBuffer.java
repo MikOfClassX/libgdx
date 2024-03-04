@@ -398,7 +398,7 @@ public abstract class GLFrameBuffer<T extends GLTexture> implements Disposable {
 		Gdx.gl20.glViewport(x, y, width, height);
 	}
 
-	static final IntBuffer singleInt = BufferUtils.newIntBuffer(1);
+	final IntBuffer singleInt = BufferUtils.newIntBuffer(1);
 
 	/** Transfer pixels from this frame buffer to the destination frame buffer. Usually used when using multisample, it resolves
 	 * samples from this multisample FBO to a non-multisample as destination in order to be used as textures. This is a convenient
