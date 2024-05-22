@@ -93,6 +93,16 @@ public class RenderContext {
 		}
 	}
 
+	/** enable GL blend state */
+	protected void enableBlend () {
+		Gdx.gl.glEnable(GL20.GL_BLEND);
+	}
+
+	/** disable GL blend state */
+	protected void disableBlend () {
+		Gdx.gl.glDisable(GL20.GL_BLEND);
+	}
+
 	public void setBlending (final boolean enabled, final int sFactor, final int dFactor) {
 		setBlending(enabled, sFactor, dFactor, sFactor, dFactor, GL20.GL_FUNC_ADD, GL20.GL_FUNC_ADD, Color.CLEAR);
 	}
@@ -102,9 +112,9 @@ public class RenderContext {
 		if (enabled != blending) {
 			blending = enabled;
 			if (enabled)
-				Gdx.gl.glEnable(GL20.GL_BLEND);
+				enableBlend();
 			else
-				Gdx.gl.glDisable(GL20.GL_BLEND);
+				disableBlend();
 		}
 
 		if (enabled) {
