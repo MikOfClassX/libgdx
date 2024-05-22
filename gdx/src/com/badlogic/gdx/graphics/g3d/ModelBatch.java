@@ -152,8 +152,8 @@ public class ModelBatch implements Disposable {
 	public ModelBatch () {
 		this(null, null, null);
 	}
-	
-	/** Create the render context 
+
+	/** Create the render context
 	 * @return the {@link RenderContext} */
 	protected RenderContext createRenderContext () {
 		return new RenderContext(new DefaultTextureBinder(DefaultTextureBinder.LRU, 1));
