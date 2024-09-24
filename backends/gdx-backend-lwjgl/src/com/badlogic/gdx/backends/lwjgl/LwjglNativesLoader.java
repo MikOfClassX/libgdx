@@ -46,48 +46,50 @@ public final class LwjglNativesLoader {
 		if (!load) return;
 
 		if (!GdxNativesLoader.disableLwjglNativesLoading) {
-		SharedLibraryLoader loader = new SharedLibraryLoader();
-		File nativesDir = null;
-		try {
-			String lwjglLib = null;
-			String openalLib = null;
-			switch (os) {
-			case Windows:
-				switch (bitness) {
-				case _32:
-					lwjglLib = "lwjgl.dll";
-					openalLib = "OpenAL32.dll";
+			SharedLibraryLoader loader = new SharedLibraryLoader();
+			File nativesDir = null;
+			try {
+				String lwjglLib = null;
+				String openalLib = null;
+				switch (os) {
+				case Windows:
+					switch (bitness) {
+					case _32:
+						lwjglLib = "lwjgl.dll";
+						openalLib = "OpenAL32.dll";
+						break;
+					case _64:
+						lwjglLib = "lwjgl64.dll";
+						openalLib = "OpenAL64.dll";
+						break;
+					}
 					break;
-				case _64:
-					lwjglLib = "lwjgl64.dll";
-					openalLib = "OpenAL64.dll";
+				case MacOsX:
+					lwjglLib = "liblwjgl.dylib";
+					openalLib = "openal.dylib";
+					break;
+				case Linux:
+					switch (bitness) {
+					case _32:
+						lwjglLib = "liblwjgl.so";
+						openalLib = "libopenal.so";
+						break;
+					case _64:
+						lwjglLib = "liblwjgl64.so";
+						openalLib = "libopenal64.so";
+						break;
+					}
 					break;
 				}
-				break;
-			case MacOsX:
-				lwjglLib = "liblwjgl.dylib";
-				openalLib = "openal.dylib";
-				break;
-			case Linux:
-				switch (bitness) {
-				case _32:
-					lwjglLib = "liblwjgl.so";
-					openalLib = "libopenal.so";
-					break;
-				case _64:
-					lwjglLib = "liblwjgl64.so";
-					openalLib = "libopenal64.so";
-					break;
-				}
-				break;
+				if (lwjglLib == null) throw new GdxRuntimeException("Unknown LWJGL platform: " + os + ", " + bitness);
+				nativesDir = loader.extractFile(lwjglLib, null).getParentFile();
+				if (!LwjglApplicationConfiguration.disableAudio) loader.extractFileTo(openalLib, nativesDir);
+			} catch (Throwable ex) {
+				throw new GdxRuntimeException("Unable to extract LWJGL natives.", ex);
 			}
-			if (lwjglLib == null) throw new GdxRuntimeException("Unknown LWJGL platform: " + os + ", " + bitness);
-			nativesDir = loader.extractFile(lwjglLib, null).getParentFile();
-			if (!LwjglApplicationConfiguration.disableAudio) loader.extractFileTo(openalLib, nativesDir);
-		} catch (Throwable ex) {
-			throw new GdxRuntimeException("Unable to extract LWJGL natives.", ex);
-		}
 
+		}
 		load = false;
+
 	}
 }
