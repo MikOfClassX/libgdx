@@ -48,6 +48,8 @@ public class Node {
 	/** the global transform, product of local transform and transform of the parent node, calculated via
 	 * {@link #calculateWorldTransform()} **/
 	public final Matrix4 globalTransform = new Matrix4();
+	/** ClassX: the offset transform, it will be concatenated to node world transform **/
+	public final Matrix4 offsetTransform = new Matrix4();
 
 	public Array<NodePart> parts = new Array<NodePart>(2);
 
@@ -68,6 +70,9 @@ public class Node {
 			globalTransform.set(parent.globalTransform).mul(localTransform);
 		else
 			globalTransform.set(localTransform);
+
+		// concatenate optional offset transform
+		globalTransform.mul(offsetTransform);
 		return globalTransform;
 	}
 
@@ -280,6 +285,7 @@ public class Node {
 		rotation.set(other.rotation);
 		scale.set(other.scale);
 		localTransform.set(other.localTransform);
+		offsetTransform.set(other.offsetTransform);
 		globalTransform.set(other.globalTransform);
 		parts.clear();
 		for (NodePart nodePart : other.parts) {
