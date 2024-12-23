@@ -2,10 +2,12 @@
 - [BREAKING CHANGE] Added glBlendEquationSeparate/glBlendFuncSeparate support in BlendingAttribute, see #7095
 [1.12.2-SNAPSHOT]
 [1.13.1]
+- [BREAKING CHANGE] Android: Since 1.13.0 libGDX requires setting `android.useAndroidX=true` in your gradle.properties file. In 1.13.1 it is NO longer needed to define the `androidx.core:core` dependency in your Android module.
 - iOS: Update to MobiVM 2.3.22
 - iOS: Fixes Gdx.openURI() not working on iOS 18.1 Simulator.
 - Change visibility of PolygonSpriteBatch.switchTexture() to protected
 - Added XmlReader.getChildren() and XmlReader.replaceChild()
+- LWJGL3: Fix pauseWhenLostFocus not working as expected
 - API Addition: Added FPSLogger#setBound
 
 [1.13.0]
