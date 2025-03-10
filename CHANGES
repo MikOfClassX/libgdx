@@ -4,6 +4,7 @@
 [1.14.0]
 - [BREAKING CHANGE] Android: Updated minSDK to 21. Multidex config is no longer required, please check https://developer.android.com/build/multidex.
 - [BREAKING CHANGE] Android: Proguard config line `boolean getUseDefaultContactFilter();` needs to be added. See https://github.com/libgdx/libgdx/pull/7578.
+- [BREAKING CHANGE] Android: Removed `AndroidApplicationConfiguration#touchSleepTime`.
 - API Addition: Allow option to set Box2D native ContactFilter (World#setContactFilter(null)) for performance improvements.
 - API Addition: Added BooleanArray#replaceFirst and BooleanArray#replaceAll
 - API Addition: Added ByteArray#replaceFirst and ByteArray#replaceAll
@@ -18,6 +19,7 @@
 
 [1.13.1]
 - [BREAKING CHANGE] Android: Since 1.13.0 libGDX requires setting `android.useAndroidX=true` in your gradle.properties file. In 1.13.1 it is NO longer needed to define the `androidx.core:core` dependency in your Android module.
+- [BREAKING CHANGE] BaseTmxMapLoader no longer parses point objects into zero-sized RectangleMapObject. Instead, points are now represented with PointMapObject
 - iOS: Update to MobiVM 2.3.22
 - iOS: Fixes Gdx.openURI() not working on iOS 18.1 Simulator.
 - Change visibility of PolygonSpriteBatch.switchTexture() to protected
@@ -59,7 +61,6 @@
 - Fixed scene2d.ui layout for fractional positions and sizes.
 - LWJGL3: Added pauseWhenMinimized and pauseWhenLostFocus flags to Lwjgl3ApplicationConfiguration.
 - libGDX is now built using Java 17 due to Gradle 8 requirements.
-- New GDX Setup projects now use Gradle 8.4 and AGP Plugin 8.1.2 which require at least Java 17.
 - Fixed Timer#stop, remember time spent stopped and delay tasks when started again. #7281
 - Android: Add configuration option to render under the cutout if available on the device.
 - Fix: Keep SelectBox popup from extending past right edge of stage.
@@ -69,6 +70,7 @@
 - Optimization of SpriteBatch in GL30 default modes, as indices do not need to be updated
 - Desktop: Added support for 8/32/64-bit PCM and MP3 WAVs
 - Desktop: Improved support for surround sound audio files (#6792)
+- gdx-setup has been replaced with https://github.com/libgdx/gdx-liftoff
 - Android: Added support for predictive back gesture (requires android:enableOnBackInvokedCallback="true" in manifest)
 - API Removal: Removed deprecated back and menu key methods. Use `setCatchKey` and `isCatchKey` instead.
 - Cache packed color on sprite to improve performance
