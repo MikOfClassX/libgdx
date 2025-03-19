@@ -62,7 +62,7 @@ import com.badlogic.gdx.utils.Timer.Task;
  * implementation will bring up the default IME.
  * @author mzechner
  * @author Nathan Sweet */
-public class TextField extends Widget implements Disableable {
+public class TextField extends Widget implements Disableable, Styleable<TextField.TextFieldStyle> {
 	static protected final char BACKSPACE = 8;
 	static protected final char CARRIAGE_RETURN = '\r';
 	static protected final char NEWLINE = '\n';
@@ -640,7 +640,7 @@ public class TextField extends Widget implements Disableable {
 	boolean changeText (String oldText, String newText) {
 		if (newText.equals(oldText)) return false;
 		text = newText;
-		ChangeEvent changeEvent = Pools.obtain(ChangeEvent.class);
+		ChangeEvent changeEvent = Pools.obtain(ChangeEvent::new);
 		boolean cancelled = fire(changeEvent);
 		if (cancelled) text = oldText;
 		Pools.free(changeEvent);
