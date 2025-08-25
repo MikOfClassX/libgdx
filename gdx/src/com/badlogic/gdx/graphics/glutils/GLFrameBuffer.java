@@ -405,7 +405,6 @@ public abstract class GLFrameBuffer<T extends GLTexture> implements Disposable {
 	final IntBuffer singleInt = BufferUtils.newIntBuffer(1);
 	private IntBuffer drawBuffersForTransfer;
 
-
 	/** Transfer pixels from this frame buffer to the destination frame buffer. Usually used when using multisample, it resolves
 	 * samples from this multisample FBO to a non-multisample as destination in order to be used as textures. This is a convenient
 	 * method that automatically choose which of stencil, depth, and colors buffers attachment to be copied.
