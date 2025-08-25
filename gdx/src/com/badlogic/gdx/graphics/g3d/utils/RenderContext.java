@@ -116,7 +116,6 @@ public class RenderContext {
 			else
 				disableBlend();
 		}
-
 		if (enabled) {
 			if (blendConstantColor != constantColor) {
 				if (constantColor != null) {
