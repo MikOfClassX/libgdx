@@ -45,7 +45,7 @@ import com.badlogic.gdx.utils.Pool.Poolable;
  * @author Alexander Dorokhov
  * @author Thomas Creutzenberg */
 public class GlyphLayout implements Poolable {
-	private final Pool<GlyphRun> glyphRunPool = Pools.get(GlyphRun.class);
+	private final Pool<GlyphRun> glyphRunPool = new DefaultPool<>(GlyphRun::new);
 	private final IntArray colorStack = new IntArray(4);
 	static private final float epsilon = 0.0001f;
 
