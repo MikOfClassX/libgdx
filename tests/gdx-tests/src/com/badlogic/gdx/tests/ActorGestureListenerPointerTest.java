@@ -71,7 +71,7 @@ public class ActorGestureListenerPointerTest extends GdxTest {
 
 	private void update (float deltaTime) {
 
-		stage.act(Gdx.graphics.getDeltaTime());
+		stage.act(deltaTime);
 
 		if (inputTriggered) return;
 

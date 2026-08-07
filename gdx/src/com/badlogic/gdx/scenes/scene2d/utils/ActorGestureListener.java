@@ -132,8 +132,9 @@ public class ActorGestureListener implements EventListener {
 				detector.touchUp(event.getStageX(), event.getStageY(), event.getPointer(), event.getButton());
 				touchUp(event, touchUpX, touchUpY, event.getPointer(), event.getButton());
 			}
-			if (event.getPointer() <= 1) activeTouches--;
-			if (activeTouches == 0) {
+			if (event.getPointer() <= 1 && activeTouches > 0) activeTouches--;
+			if (activeTouches <= 0) {
+				activeTouches = 0;
 				this.event = null;
 				actor = null;
 				touchDownTarget = null;
