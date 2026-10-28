@@ -65,7 +65,7 @@ public class BlendingAttribute extends Attribute {
 		this.destFunctionAlpha = destFuncAlpha;
 		this.equationRGB = equationRGB;
 		this.equationAlpha = equationAlpha;
-		this.constantColor = constantColor;
+		this.constantColor = new Color(constantColor);
 		this.opacity = opacity;
 	}
 
